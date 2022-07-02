@@ -1,0 +1,644 @@
+
+    
+    
+
+    
+
+    
+
+    
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>
+            
+                 Polar Flow
+            
+        </title>
+
+        <meta name="description" content="">
+        <meta name="author" content="Polar Electro Oy">
+
+        <meta property="og:url" content="https://flow.polar.com/login" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Polar Flow" />
+        <meta property="og:description" content="Polar Flow - Online training and workout log for Polar products." />
+        <meta property="og:image" content="https://flow.cdn.polar.com/flow/6.100.0/images/polar_square_logo_393px.png" />
+
+   		<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+   		<!--[if lt IE 9]>
+            <link href="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/html5.min.js" rel="stylesheet" type="text/css">
+    	<![endif]-->
+
+   		<link href="https://flow.cdn.polar.com/flow/6.100.0/stylesheets/styles.min.css" rel="stylesheet" type="text/css">
+   		<link href="https://flow.cdn.polar.com/flow/6.100.0/stylesheets/styles2.min.css" rel="stylesheet" type="text/css">
+        <link href="https://flow.cdn.polar.com/flow/6.100.0/injectors/polar-ui-module-utils/main.min.css" rel="stylesheet" type="text/css">
+
+		
+		<script src="/jsRoutes" type="text/javascript"></script>
+		
+        
+        <style>
+    @font-face {
+    font-family: 'Open Sans';
+    
+
+    
+        
+            src: url('https://flow.cdn.polar.com/flow/6.100.0/typography/open_sans/opensans-regular-webfont.eot?origin=c562fdd19d6228873d72b8693f328ab4');
+            src: url('https://flow.cdn.polar.com/flow/6.100.0/typography/open_sans/opensans-regular-webfont.eot?#iefix?origin=c562fdd19d6228873d72b8693f328ab4') format('embedded-opentype'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/open_sans/opensans-regular-webfont.woff?origin=c562fdd19d6228873d72b8693f328ab4') format('woff'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/open_sans/opensans-regular-webfont.ttf?origin=c562fdd19d6228873d72b8693f328ab4') format('truetype'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/open_sans/opensans-regular-webfont.svg#ywftsvg?origin=c562fdd19d6228873d72b8693f328ab4') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        
+    
+    }
+</style>
+        <style>
+    @font-face {
+    font-family: 'PolarIcons';
+    
+
+    
+        
+            src: url('https://flow.cdn.polar.com/flow/6.100.0/typography/polar_icons/Polar-Electro-UI-icons.eot?origin=c562fdd19d6228873d72b8693f328ab4');
+            src: url('https://flow.cdn.polar.com/flow/6.100.0/typography/polar_icons/Polar-Electro-UI-icons.eot?#iefix?origin=c562fdd19d6228873d72b8693f328ab4') format('embedded-opentype'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/polar_icons/Polar-Electro-UI-icons.woff?origin=c562fdd19d6228873d72b8693f328ab4') format('woff'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/polar_icons/Polar-Electro-UI-icons.ttf?origin=c562fdd19d6228873d72b8693f328ab4') format('truetype'),
+            url('https://flow.cdn.polar.com/flow/6.100.0/typography/polar_icons/Polar-Electro-UI-icons.svg#ywftsvg?origin=c562fdd19d6228873d72b8693f328ab4') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        
+    
+    }
+</style>
+
+        
+    	<script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/modernizr/modernizr.min.js" type="text/javascript"></script>
+
+    	
+        <link href="https://flow.cdn.polar.com/flow/6.100.0/stylesheets/styles_landing.min.css" rel="stylesheet" type="text/css">
+    
+
+        
+        <link rel="apple-touch-icon" sizes="57x57" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_57x57.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_114x114.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_72x72.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_144x144.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_60x60.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_120x120.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_76x76.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_152x152.png">
+        <link rel="icon" type="image/png" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_196x196.png" sizes="196x196">
+        <link rel="icon" type="image/png" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_160x160.png" sizes="160x160">
+        <link rel="icon" type="image/png" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_16x16.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="https://flow.cdn.polar.com/flow/6.100.0/images/PolarIcons/Polar-Symbol_32x32.png" sizes="32x32">
+        <meta name="msapplication-TileColor" content="#333333">
+        <meta name="msapplication-TileImage" content="https://flow.cdn.polar.com/flow/6.100.0/images/mstile-144x144.png">
+
+        
+            <script src="https://cookie-cdn.cookiepro.com/scripttemplates/otSDKStub.js"
+        data-document-language="true"
+        type="text/javascript"
+        charset="UTF-8"
+        data-domain-script="88fd6e30-d26e-40b0-98cc-d7de711bc551" >
+</script>
+<script type="text/javascript">
+    function OptanonWrapper() {
+        var isMarketingCookieConsentAccepted = OnetrustActiveGroups && OnetrustActiveGroups.indexOf("C0004") !== -1;
+        var isAnalyticsCookieConsentAccepted = OnetrustActiveGroups && OnetrustActiveGroups.indexOf("C0002") !== -1;
+        if (!isMarketingCookieConsentAccepted) {
+            deleteGoogleCookies(document.location.hostname);
+        }
+        if (!isAnalyticsCookieConsentAccepted) {
+            var domainParts = document.location.hostname.split(".");
+            var rootDomain = domainParts.length >= 2 ? domainParts[domainParts.length - 2] + "." +
+                    domainParts[domainParts.length - 1] : domainParts[0];
+            deleteGoogleCookies(rootDomain);
+        }
+        function deleteGoogleCookies(cookieDomain) {
+            document.cookie = '_ga=; Path=/; Domain=' + cookieDomain + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = '_gid=; Path=/; Domain=' + cookieDomain + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+    }
+</script>
+        
+
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.type='text/plain';a.className=
+                'optanon-category-C0002';a.src=g;m.parentNode.insertBefore(a,m)})(window,
+                document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('set', 'anonymizeIp', true);
+        ga('create', 'UA-36098126-1',
+           'auto');
+        ga('send', 'pageview');
+</script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/utils/appGlobal.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/utils/browserCheck.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            var compCheck = new BrowserCompatibility();
+            compCheck.check();
+
+        	
+        	var resourceRoot = "https://flow.cdn.polar.com/flow/6.100.0/";
+        </script>
+
+		
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/jquery-2.1.3.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/underscore/underscore.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/jquery.cookie.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/lib/preferences.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/utils/common_helpers.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/lib/navigation.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/utils/modal.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/jQueryTools/jquery.tools.min.js" type="text/javascript"></script>
+		
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/bootstrap/modal.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/jquery-placeholder/jquery.placeholder.js" type="text/javascript"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/lib/fancyselect.min.js"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/lib/colored-icons.min.js"></script>
+        
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/utils/animations.min.js"></script>
+
+    </head>
+
+
+
+    
+        
+            <body class="fixed-navigation override  ">
+        
+    
+
+    <div class="notification-panel center noscript">
+    <p> <b>Javascript is disabled</b></p>
+    <p>Enable Javascript to continue using the service.</p>
+</div>
+
+    
+        
+    
+
+    <nav role="navigation" class="navigation fixed">
+        <div class="global-nav">
+            <ul class="global-nav__list " role="menu">
+                
+                
+                
+                
+                <li role="menuitem" class="active"><a onclick="ga('send','event', 'Header Nav', 'Polar Flow', 'Click');" href="/">Polar Flow</a></li>
+                <li role="menuitem"><a onclick="ga('send','event', 'Header Nav', 'Updates', 'Click');" href="https://support.polar.com/updates">Updates</a></li>
+                <li role="menuitem"><a onclick="ga('send','event', 'Header Nav', 'polar.com', 'Click');" href="https://www.polar.com">Polar.com</a></li>
+            </ul>
+        </div>
+        <div class="main-nav">
+            
+            <div class="main-nav__wrap">
+                <a id="btn-navbar" class="btn-navbar open-nav nav-element open-panel">
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand " role="branding" href="/">
+                    <img src="https://flow.cdn.polar.com/flow/6.100.0/images/flow_logo.svg">
+                </a>
+
+                
+
+                <div class="main-nav__menuholder ">
+                    
+                    <ul class="main-nav__menu" role="menu" id="primaryNavigation">
+                    	
+                        	
+                        	
+                        		<li role="menuitem" class="hidden-md hidden-lg"><a href="/login"><span>Sign in</span></a></li>
+                        		<li role="menuitem" class="hidden-md hidden-lg"><a href="/register"><span>Register now</span></a></li>
+                        	
+                        
+                    </ul>
+
+                    
+
+                    <ul class="main-nav__usermenu" role="menu" id="user-profile-navigation">
+                        
+                        	
+                            
+				                <li role="menuitem" class="main-nav__user-dropdown dropdown hidden-xs hidden-sm">
+				                     <a class="dropdown-toggle sign-in" id="loginButtonNav" style="text-transform:none">Sign in</a>
+				                     <div id="sign-in-container" class="dropdown-menu dropdown-menu--has-caret pull-right append-ajax sign-in-container" role="menu" aria-labelledby="signinLabel">
+				                         <div class="spinner__container">
+	<div class="spinner__round spinner__round1"></div> 
+	<div class="spinner__round spinner__round2"></div> 
+	<div class="spinner__round spinner__round3"></div>
+</div>
+				                     </div>
+				                </li>
+                            
+                        
+                    </ul>
+                    
+                    <div class="main-nav__mobile-global-holder"></div>
+                </div>
+            </div>
+        </div>
+        <div class="alert-wrapper relative">
+	        
+	        
+	        
+        </div>
+
+         
+
+    </nav>
+
+
+   	<div id="loading-spinner"><div id="spinner"></div></div>
+
+   	
+   	<div class="bottom-canvas container-fluid">
+   		<div class="row">
+   			<div class="col-md-12">
+   				
+   			</div>
+   		</div>
+   		<div class="row no-margin" id="ajaxed-settings" data-toggle="buttons-checkbox">
+
+   		</div>
+   	</div>
+
+    <div class="wrapper">
+        
+        <div class="container-fluid content-started margin-top">
+        
+
+<div id="ajaxed">
+ 
+<form action="/login" method="POST" id="loginForm" class="loginForm">
+    
+    <input type="hidden" name="csrfToken" value="7109383f12c5343545032d7f49bf8c76b0bb9ffa-1652354473353-75128796adf6e88cf94c2d7a"/>
+
+    <input type="hidden" name="returnUrl" value="/?n=D6FQQAAAAAAAAAAACXDMCCWCGAGABUD75FQ3PORNXC5ASYY7EJJEFGTCWA2KHLIHCX7V3PJ433NWI456TBPPDULO2D75KIRPNSRHSK24O7GZK7L3526JEBXOFLU26SGEWUTMT52DMEGB4U7KFAE6PZRFVSGOHRGOWEOSFHHMGERNVGJCLBMGADRDHCMINRK4H5PUOQHJWF5QAAAA">
+    <div class="row">
+        
+            <div class="col-md-12">
+                
+
+
+
+
+
+<div class="control-group  ">
+
+	<div class="">
+		<label for="email" class="control-label"></label>
+
+        
+	</div>
+
+    <div class="controls ">
+
+    
+        
+    <div>
+        
+    
+
+    
+
+    
+   	<input type="email" id="email" name="email" value="" maxlength="255" placeholder="Email" class="login-field">
+
+
+  	
+  	
+
+	
+
+    
+    </div>
+
+		
+		<p class="help-block"></p>
+		
+	</div>
+</div>
+
+
+                
+
+
+
+
+
+<div class="control-group  ">
+
+	<div class="">
+		<label for="password" class="control-label"></label>
+
+        
+	</div>
+
+    <div class="controls ">
+
+    
+        
+    <div>
+        
+    
+
+    
+
+    
+    <input type="password" id="password" name="password" value="" placeholder="Password" class="login-field">
+
+
+  	
+  	
+
+	
+
+    
+    </div>
+
+		
+		<p class="help-block"></p>
+		
+	</div>
+</div>
+
+
+                <div class="button-set clearfix">
+                    <button type="submit" id="login" class="btn btn-primary btn-block"><span>Sign in</span></button>
+                </div>
+                <p class="small"><a id="forgot-pwd" href="/resetPassword?n=D6FQQAAAAAAAAAAACXDMCCWCGAGABUD75FQ3PORNXC5ASYY7EJJEFGTCWA2KHLIHCX7V3PJ433NWI456TBPPDULO2D75KIRPNSRHSK24O7GZK7L3526JEBXOFLU26SGEWUTMT52DMEGB4U7KFAE6PZRFVSGOHRGOWEOSFHHMGERNVGJCLBMGADRDHCMINRK4H5PUOQHJWF5QAAAA">Have you forgotten your password?</a></p>
+                <p class="small"><a id="btn-register-user" data-hover="Create your Polar account to access Flow!" href="/register?n=D6FQQAAAAAAAAAAACXDMCCWCGAGABUD75FQ3PORNXC5ASYY7EJJEFGTCWA2KHLIHCX7V3PJ433NWI456TBPPDULO2D75KIRPNSRHSK24O7GZK7L3526JEBXOFLU26SGEWUTMT52DMEGB4U7KFAE6PZRFVSGOHRGOWEOSFHHMGERNVGJCLBMGADRDHCMINRK4H5PUOQHJWF5QAAAA">Create your Polar account to access Flow!</a></p>
+            
+        
+    </div>
+    </div>
+
+</form>
+
+</div>
+
+    <script>
+            $(document).ready(function () {
+                getAjaxContentLogin();
+            });
+    </script>
+
+
+        </div>
+    
+
+        <footer role="footer" class="footer">
+    <nav role="contentinfo" class="clearfix">
+        <aside role="list" class="footer__link-list">
+            <a role="list-item" href="http://www.polar.com" target="_blank">© Polar Electro 2022</a>
+            <a role="list-item" href="https://www.polar.com/en/legal/terms-of-use" target="_blank">Terms of Use</a>
+            <a role="list-item" href="https://www.polar.com/en/legal/privacy-notice" target="_blank">Privacy Notice</a>
+            <a role="list-item" href="javascript:window.Optanon.ToggleInfoDisplay();">Cookie settings</a>
+            <a role="list-item" href="https://support.polar.com/support/flow?blredir">Customer care</a>
+        </aside>
+        <aside role="list" class="footer__social-media muted">
+            <p>Follow us on</p>
+            <a role="list-item" href="http://www.facebook.com/PolarGlobal" target="_blank" class="fb">Facebook</a><a href="https://twitter.com/PolarGlobal" target="_blank" class="twitter" role="list-item">Twitter</a><a href="http://instagram.com/polarglobal" target="_blank" class="instagram">Instagram</a><a href="http://www.youtube.com/polar" class="youtube" target="_blank">Youtube</a>
+        </aside>
+    </nav>
+</footer>
+
+<div id="browserNotSupportedContainer"></div>
+
+<script type="text/template" id="browserNotSupportedFooterTemplate">
+    <div class="fixed-footer fixed">
+        <div class="fixed-footer__left">
+            <p>
+                <i class="icon icon-info"></i>
+                Your browser is no longer supported. Please update to the latest version or change your browser to get the most out of Polar Flow.
+                <a href="" onclick="compCheck.goToNotSupportedPage(event)" id="browserNotSupportedLink">More info</a>
+            </p>
+        </div>
+        <div class="fixed-footer__right">
+            <a href="" onclick="compCheck.clearBrowserNotSupportedUrl(event)"><i class="icon icon-close"></i></a>
+        </div>
+    </div>
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof compCheck !== 'undefined') {
+            compCheck.drawFixedFooter();
+        }
+    });
+</script>
+
+    </div>
+    <div class="overlay" id="flow_overlay"></div>
+    <div id="modalOverlay" class="modal fade polar-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"></div>
+
+    
+
+
+<script type="text/javascript" charset="utf-8">
+    var fVersio = '6.100.0';
+    
+    
+        AppGlobal.init("", "https://flow.cdn.polar.com/flow/6.100.0/", true);
+    
+    
+
+CommonHelpers.weekStartDay = 1;
+CommonHelpers.dateFormat = 'dd-MM-yyyy';
+CommonHelpers.dateFormatNZ = 'd-M-yyyy';
+CommonHelpers.dateFormatShortNZ = 'd-M';
+CommonHelpers.timeFormat = 'HH:mm';
+CommonHelpers.hourFormat = 'HH';
+CommonHelpers.units = 'METRIC';
+CommonHelpers.dateSeparator = '-)';
+CommonHelpers.language = 'en';
+
+
+    var loginSuccess = false,
+	notification = $(".alert-message");
+
+	var spinner = new CommonHelpers.Spinner;
+
+window.onload = function(){
+	
+    if(notification.length){
+		$(notification).addClass("visible");
+	}
+	setTimeout(function(){
+		$(notification).removeClass("visible");
+	}, CommonHelpers.flashMessageTimeout);
+};
+
+$(document).ready(function() {
+
+    
+    $.cookie("timezone", new Date().getTimezoneOffset()*-1, { path: "/" });
+
+    if(window.Highcharts) {
+        Highcharts.setOptions({
+            credits: {
+                enabled: false
+            }
+        });
+    }
+
+	
+	var wrapper = document.querySelector("div.wrapper");
+    $("#flow_overlay").overlay({
+    	top: "center",
+        mask: {
+        color: "#000",
+        	loadSpeed: 200,
+        	opacity: 0.2
+        },
+        closeOnClick: false,
+        load: false,
+        onBeforeLoad: function(){
+        	$(wrapper).addClass("modal-loaded");
+        },
+        onClose: function(){
+        	$(wrapper).removeClass("modal-loaded");
+            $("#flow_overlay").trigger("modal.close");
+        }
+    });
+
+    $("body").on("modal:open", function() {
+        // Use same class and padding as Bootstrap modal.
+        $("body").addClass("modal-open");
+        if(document.body.scrollHeight > document.documentElement.clientHeight) {
+            $("body").css("padding-right", "15px");
+            $("body").addClass("modal-scrollbar-visible");
+        }
+    });
+
+    $("body").on("modal:close", function() {
+        // Remove same class and padding as Bootstrap modal.
+        $("body").css("padding-right", "");
+        $("body").removeClass("modal-open");
+        $("body").removeClass("modal-scrollbar-visible");
+    });
+
+    $(notification).on("click", function(){
+		$(this).removeClass("visible");
+	});
+
+    if (window.PrivacyUtils) {
+        window.PrivacyUtils.initConsentModal("en", "Polar Flow");
+    }
+});
+
+
+$(function() {
+	$("select").fancySelect();
+
+    
+    $(".fancy-select").on("click",function(){
+        
+        var options = $(".fancy-select.options[identifier=\"" + $(this).find("select").attr("id") + "-options\"]");
+
+        if(options.length < 1){
+            
+            options = $(".fancy-select.options:visible").not("[identifier]");
+            for(var i = 0; i < options.length; i++){
+                if(!$(options[i]).attr("identifier")){
+                    options = options[i];
+                    $(options).attr("identifier", $(this).find("select").attr("id") + "-options");
+                    break;
+                }
+            }
+            var selectedOption = $(options).find("li.selected");
+            var firstOption = $(options).find("li.selected:first");
+            if(selectedOption.length > 0){
+                $(options).scrollTop($(selectedOption).position().top + $(options).scrollTop());
+            }
+        }
+    });
+
+	// Toggling off jQuery animations
+	if(AppGlobal.isMobile === true) {
+		$.fx.off = !$.fx.off;
+	}
+
+	
+
+    $("body").on("touchstart.dropdown", ".dropdown-menu", function (e) { e.stopPropagation(); });
+	$("input, textarea").placeholder({force: false});
+
+    // Bind email verification resend button events, but only if button is visible and function is defined
+    if(typeof window.bindEmailVerificationResendButton === "function") window.bindEmailVerificationResendButton();
+
+    
+    $(".flow-logout-link").bind("click", function (e) {
+        e.preventDefault();
+        window.sessionStorage.removeItem("UserConsentChecked");
+        window.location.href = "/logout";
+    });
+    
+});
+</script>
+
+
+<script>
+var Messages = {};
+
+Messages["ffc.invitation_notification_accepted"] = "Success! You are now an instructor at {0}.";
+Messages["notifications.zero_notifications"] = "There are no notifications at this time.";
+Messages["notifications.no_more_notifications"] = "There are no more notifications at this time.";
+Messages["common.abbreviations.unitOfDays"] = "days";
+Messages["common.abbreviations.unitOfHours"] = "hours";
+Messages["common.abbreviations.unitOfMinutes"] = "minutes";
+Messages["common.abbreviations.unitOfDay.long"] = "day";
+Messages["common.abbreviations.unitOfHour.long"] = "hour";
+Messages["common.abbreviations.unitOfMinute.long"] = "min";
+Messages["common.abbreviations.unitOfDay.short"] = "d";
+Messages["common.abbreviations.unitOfHour.short"] = "h";
+Messages["common.abbreviations.unitOfMinute.short"] = "min";
+Messages["landing_page.resetpassword_ajax.aftermessage.success"] = "Password successfully reset. Check your email.";
+Messages["landing_page.resetpassword_ajax.aftermessage.error"] = "There was an error resetting your password.";
+Messages["error.password.pattern"] = "Check your password. Its minimum length is 8 characters.";
+Messages["error.password.match"] = "The passwords do not match. Please retype your password.";
+Messages["analyseview.session_privacy.mouseover"] = "Changing the privacy of this training session to Public means that everyone can see your session, including people not signed in to Flow.";
+</script>
+<script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/react/react-15.6.2.min.js" type="text/javascript"></script>
+<script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/react/react-dom-15.6.2.min.js" type="text/javascript"></script>
+<script src="https://flow.cdn.polar.com/flow/6.100.0/javascripts/3rd_party/es6-promise.auto.min.js" type="text/javascript"></script>
+<script src="https://flow.cdn.polar.com/flow/6.100.0/injectors/polar-ui-module-utils/polar-ui-module-utils.min.js"></script>
+
+        <script src="https://flow.cdn.polar.com/flow/6.100.0/javascript/views/landing/landing.min.js"></script>
+    
+</body>
+</html>
+
