@@ -54,16 +54,16 @@ def get_last_date(service, fileName='spreadSheetId.json', keyName='SPREADSHEET_I
     return result.get('values')[len(result.get('values')) - 1][0]
 
 
-def increment_date_by_number_of_days(date_time_str='01∕01/2000', numberOfDays=1):
+def increment_date_by_number_of_days(date_time_str='01∕01/2000', number_of_days=1):
     date_time_obj = datetime.strptime(date_time_str + ' 00:00:00', '%d/%m/%Y %H:%M:%S')
-    date_time_obj += timedelta(days=numberOfDays)
+    date_time_obj += timedelta(days=number_of_days)
     return date_time_obj.strftime("%d/%m/%Y")
 
 
-def get_array_of_dates(lastDate, numberOfDays):
+def get_array_of_dates(last_date, number_of_days):
     date_array = []
-    for dayIncrement in range(1, numberOfDays + 1):
-        date_array.append(increment_date_by_number_of_days(date_time_str=lastDate, numberOfDays=dayIncrement))
+    for dayIncrement in range(1, number_of_days + 1):
+        date_array.append(increment_date_by_number_of_days(date_time_str=last_date, number_of_days=dayIncrement))
     return date_array
 
 
@@ -256,7 +256,7 @@ def cacca():
 
         numberOfDays = 10
         date = get_last_date(service=build('sheets', 'v4', credentials=creds), fileName=file_name, keyName=key_name)
-        arrayOfDates = get_array_of_dates(lastDate=date, numberOfDays=numberOfDays)
+        arrayOfDates = get_array_of_dates(last_date=date, number_of_days=numberOfDays)
         yesNoTrainingValues = ['Test'] * numberOfDays
         training_feeling_values = ['Test'] * numberOfDays
         generalFeelingValues = ['Test'] * numberOfDays

@@ -9,3 +9,4 @@ protobuf==4.23.4
 pyvesync==2.1.8
 Requests==2.31.0
 selenium==4.10.0
+google~=3.0.0
