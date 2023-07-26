@@ -17,6 +17,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from selenium import webdriver
 import pandas as pd
+
+import vesync
 from vesync import get_data
 import requests
 import webbrowser
@@ -287,7 +289,3 @@ def cacca():
                               rangee=rangeToWrite, value_input_option=value_input_option, body=body)
     except HttpError as err:
         print(err)
-
-
-if __name__ == "__main__":
-    print("vesync: " + get_data())

@@ -1,8 +1,12 @@
 from pyvesync import VeSync
-
+import myfitnesspal
 
 def get_data():
-    manager = VeSync("ferocemarcello@gmail.com", "password", time_zone="Europe/Oslo")
-    manager.login()
-    manager.update()
-    return manager.get_devices()
+    import garmin_fit_sdk
+    import requests
+    client = garmin_fit_sdk.GarminConnectAPIClient(username="ferocemarcello@gmail.com", password="")
+    activities = client.get_activities()
+    for activity in activities:
+        print(activity.name)
+
+    return ""

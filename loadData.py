@@ -5,6 +5,8 @@ import isodate as isodate
 import requests
 from flask import Flask, request, redirect
 
+import vesync
+
 CALLBACK_ENDPOINT = "/oauth2_callback"
 CALLBACK_PORT = 5000
 REDIRECT_URL = "http://localhost:{}{}".format(CALLBACK_PORT, CALLBACK_ENDPOINT)
@@ -132,9 +134,9 @@ def make_transactions_get_urls(config_dict, data_name):
     log = requests.get('https://www.polaraccesslink.com/v3/users/' + str(
         config_dict["user_id"]) + '/' + data_name + '/' + str(transaction_id), params={},
                        headers=headers).json()
-    if data_name is 'activity-transactions':
+    if data_name == 'activity-transactions':
         return log['activity-log']
-    if data_name is 'exercise-transactions':
+    if data_name == 'exercise-transactions':
         return log['exercises']
 
 
@@ -175,6 +177,9 @@ def get_all_nights(config_dict):
 
 
 if __name__ == "__main__":
+    data_scale = vesync.get_data()
+    print("vesync: " + data_scale())
+    print("ff")
     CONFIG_FILENAME = "credentials/config_polar.json"
     config = get_polar_credentials(filename=CONFIG_FILENAME)
     while "access_token" not in config:
