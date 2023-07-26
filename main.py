@@ -5,15 +5,23 @@ import json
 import os.path
 import webbrowser
 from datetime import timedelta
-
+from datetime import datetime
 import requests
+from bs4 import BeautifulSoup
+import re
+from urllib.parse import unquote
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
+from selenium import webdriver
+import pandas as pd
 from vesync import get_data
+import requests
+import webbrowser
+import tkinter as tk
+from accesslink import AccessLink
 
 client_id_google = '288512384213-h737qune0i8k8i13p49sb73taa20l810.apps.googleusercontent.com'
 client_secret_google = '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'
@@ -29,104 +37,100 @@ refresh_token_strava = 'f61e3ebe8bc18b00b16556dc52f0c1505f3450d2'
 base64encondedClientIdSecret = 'ZWExNWU2NmUtMGYyNy00ZmFhLThjZjItMjkyOGQxMjYyNTA5OjBlMWI1MDc0LTM0MzYtNGQ1ZC1iMjg2LWFlNGQxZmUyZjgzYw=='
 
 
-def get_data_from_spreadsheet(service, fileName, keyName, range):
-    return service.spreadsheets().values().get(spreadsheetId=get_spread_sheet_id(fileName=fileName, keyName=keyName),
-                                               range=range).execute()
+def get_data_from_spreadsheet(service, fileName, key_name, rangee):
+    return service.spreadsheets().values().get(spreadsheetId=get_spread_sheet_id(file_name=fileName, key_name=key_name),
+                                               range=rangee).execute()
 
 
-def getLastRow(service, fileName='spreadSheetId.json', keyName='SPREADSHEET_ID'):
+def get_last_row(service, file_name='spreadSheetId.json', key_name='SPREADSHEET_ID'):
     all_range = 'A1:F'
-    result = get_data_from_spreadsheet(service=service, fileName=fileName, keyName=keyName, range=all_range)
+    result = get_data_from_spreadsheet(service=service, fileName=file_name, key_name=key_name, rangee=all_range)
     return len(result.get('values'))
 
 
-def getLastDate(service, fileName='spreadSheetId.json', keyName='SPREADSHEET_ID'):
+def get_last_date(service, fileName='spreadSheetId.json', keyName='SPREADSHEET_ID'):
     date_range = 'A1:A'
-    result = get_data_from_spreadsheet(service=service, fileName=fileName, keyName=keyName, range=date_range)
+    result = get_data_from_spreadsheet(service=service, fileName=fileName, key_name=keyName, rangee=date_range)
     return result.get('values')[len(result.get('values')) - 1][0]
 
 
-def incrementDateByNumberOfDays(date_time_str='01∕01/2000', numberOfDays=1):
-    from datetime import datetime
+def increment_date_by_number_of_days(date_time_str='01∕01/2000', numberOfDays=1):
     date_time_obj = datetime.strptime(date_time_str + ' 00:00:00', '%d/%m/%Y %H:%M:%S')
     date_time_obj += timedelta(days=numberOfDays)
     return date_time_obj.strftime("%d/%m/%Y")
 
 
-def getArrayOfDates(lastDate, numberOfDays):
-    dateArray = []
+def get_array_of_dates(lastDate, numberOfDays):
+    date_array = []
     for dayIncrement in range(1, numberOfDays + 1):
-        dateArray.append(incrementDateByNumberOfDays(date_time_str=lastDate, numberOfDays=dayIncrement))
-    return dateArray
+        date_array.append(increment_date_by_number_of_days(date_time_str=lastDate, numberOfDays=dayIncrement))
+    return date_array
 
 
-def get_spread_sheet_id(fileName='spreadSheetId.json', keyName='SPREADSHEET_ID'):
-    with open(fileName) as f:
+def get_spread_sheet_id(file_name='spreadSheetId.json', key_name='SPREADSHEET_ID'):
+    with open(file_name) as f:
         data = json.load(f)
     f.close()
-    return data.get(keyName)
+    return data.get(key_name)
 
 
 # If modifying these scopes, delete the file token.json.
-def getCredentials(tokenFile='token.json', SCOPES=None):
-    if SCOPES is None:
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+def get_credentials(token_file='token.json', scopes=None):
+    if scopes is None:
+        scopes = ['https://www.googleapis.com/auth/spreadsheets']
     credentials = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists(tokenFile):
-        credentials = Credentials.from_authorized_user_file(tokenFile, SCOPES)
+    if os.path.exists(token_file):
+        credentials = Credentials.from_authorized_user_file(token_file, scopes)
     # If there are no (valid) credentials available, let the user log in.
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'client_secrets.json', SCOPES)
+                'client_secrets.json', scopes)
             credentials = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open(tokenFile, 'w') as token:
+        with open(token_file, 'w') as token:
             token.write(credentials.to_json())
     return credentials
 
 
-def write_values_in_range(service, fileName, keyName, range, value_input_option, body):
+def write_values_in_range(service, file_name, key_name, rangee, value_input_option, body):
     result = service.spreadsheets().values().update(
-        spreadsheetId=get_spread_sheet_id(fileName=fileName, keyName=keyName), range=range,
+        spreadsheetId=get_spread_sheet_id(file_name=file_name, key_name=key_name), range=rangee,
         valueInputOption=value_input_option, body=body).execute()
     print('{0} cells updated.'.format(result.get('updatedCells')))
 
 
-def getDataFrameFromValues(dates, yesNoTrainingValues, trainingFeelingValues, generalFeelingValues, weightValues,
-                           noteValues):
-    import pandas as pd
+def get_data_frame_from_values(dates, yes_no_training_values, training_feeling_values, general_feeling_values, weight_values,
+                               note_values):
     df = pd.DataFrame()
     dateDataFrame = pd.DataFrame({
         'Date': dates
     })
-    generalDataFrame = pd.DataFrame({
-        'Training_yes_no': yesNoTrainingValues,
-        'Training_feeling': trainingFeelingValues,
-        'General_feeling': generalFeelingValues,
-        'Weight': weightValues,
-        'Notes': weightValues
+    general_data_frame = pd.DataFrame({
+        'Training_yes_no': yes_no_training_values,
+        'Training_feeling': training_feeling_values,
+        'General_feeling': general_feeling_values,
+        'Weight': weight_values,
+        'Notes': weight_values
     })
     df['Date'] = dateDataFrame
-    df['Training_yes_no'] = generalDataFrame['Training_yes_no']
-    df['Training_feeling'] = generalDataFrame['Training_yes_no']
-    df['General_feeling'] = generalDataFrame['General_feeling']
-    df['Weight'] = generalDataFrame['Weight']
-    df['Notes'] = generalDataFrame['Notes']
+    df['Training_yes_no'] = general_data_frame['Training_yes_no']
+    df['Training_feeling'] = general_data_frame['Training_yes_no']
+    df['General_feeling'] = general_data_frame['General_feeling']
+    df['Weight'] = general_data_frame['Weight']
+    df['Notes'] = general_data_frame['Notes']
 
     return df
 
 
-def get_polar_oauth_code(client_id_polar, client_secret_polar):
-    request_url = 'https://flow.polar.com/oauth2/authorization?response_type=code&scope=accesslink.read_all&client_id=' + client_id_polar
+def get_polar_oauth_code(self_client_id_polar):
+    request_url = 'https://flow.polar.com/oauth2/authorization?response_type=code&scope=accesslink.read_all&client_id=' + self_client_id_polar
     '''
-    import requests
-    import webbrowser
     result = requests.get(request_url)
     resp = webbrowser.open(request_url)
     '''
@@ -142,17 +146,13 @@ def get_polar_access_token(oauth_code):
 
 
 def do_shit_with_polar_and_strava():
-    oauth_code_polar = get_polar_oauth_code(client_id_polar=client_id_polar, client_secret_polar=client_secret_polar)
+    oauth_code_polar = get_polar_oauth_code(self_client_id_polar=client_id_polar, client_secret_polar=client_secret_polar)
     oauth_code_polar = '97e6e13bcc23f5160509d2af10769ae6'
     polar_access_token = get_polar_access_token(oauth_code=oauth_code_polar)
 
     headers = {"Authorization": "Bearer de5a54102f1c72cea5ec504632997c0f2a9559dd"}
 
     result = requests.get('https://www.strava.com/api/v3/athlete', headers=headers)
-
-    from bs4 import BeautifulSoup
-    import re
-    from urllib.parse import unquote
 
     url = 'http://www.strava.com/oauth/authorize?client_id=' + client_id_strava + '&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read'
     response = requests.get(url, verify=False, allow_redirects=True)
@@ -172,7 +172,6 @@ def do_shit_with_polar_and_strava():
 
 
 def add_gui():
-    import tkinter as tk
     window = tk.Tk()
 
     entry = tk.Entry(width=40, bg="white", fg="black")
@@ -192,23 +191,19 @@ def wait_for_request(server_class=http.server,
     return httpd.handle_request()
 
 
-def getPolarData():
+def get_polar_data():
     scope = 'accesslink.read_all'
     myState = 'myState'
     # response = requests.get(url='https://flow.polar.com/oauth2/authorization?response_type=code&scope='+scope+'&client_id='+client_id_polar+'&state='+myState)
     # print(response)
 
-    from accesslink import AccessLink
-
-    polarAccesslink = AccessLink(client_id=client_id_polar,
+    polar_accesslink = AccessLink(client_id=client_id_polar,
                                  client_secret=client_secret_polar,
                                  redirect_url='http://localhost/')
 
-    # Navigate the user to the following URL so they can complete the authorization form.
+    # Navigate the user to the following URL, so they can complete the authorization form.
     # Code for this will vary by application.
-    auth_url = polarAccesslink.get_authorization_url()
-
-    from selenium import webdriver
+    auth_url = polar_accesslink.get_authorization_url()
     driver = webdriver.Chrome()  # open the browser
 
     # Go to the correct domain
@@ -226,25 +221,25 @@ def getPolarData():
 
     # response = requests.get(url=auth_url)
     authorization_code = '659808e260d975920b76151d06323bc3'
-    token_response = polarAccesslink.get_access_token(authorization_code)
+    token_response = polar_accesslink.get_access_token(authorization_code)
 
-    USER_ID = token_response["x_user_id"]
-    ACCESS_TOKEN = token_response["access_token"]
+    user_id = token_response["x_user_id"]
+    access_token = token_response["access_token"]
 
     try:
-        polarAccesslink.users.register(access_token=ACCESS_TOKEN)
+        polar_accesslink.users.register(access_token=access_token)
     except requests.exceptions.HTTPError as err:
         # Error 409 Conflict means that the user has already been registered for this client.
         # For most applications, that error can be ignored.
         if err.response.status_code != 409:
             raise err
-        user_info = polarAccesslink.users.get_information(user_id=USER_ID,
-                                                          access_token=ACCESS_TOKEN)
-        daily_activity_transaction = polarAccesslink.daily_activity.create_transaction(user_id=USER_ID,
-                                                                                       access_token=ACCESS_TOKEN)
+        user_info = polar_accesslink.users.get_information(user_id=user_id,
+                                                          access_token=access_token)
+        daily_activity_transaction = polar_accesslink.daily_activity.create_transaction(user_id=user_id,
+                                                                                       access_token=access_token)
         daily_activity_response = requests.get(url=daily_activity_transaction.transaction_url,
                                                headers={'Accept': 'application/json',
-                                                        'Authorization': 'Bearer ' + ACCESS_TOKEN})
+                                                        'Authorization': 'Bearer ' + access_token})
         json.loads(daily_activity_response.text).get('activity-log')
         print(user_info)
     pass
@@ -252,25 +247,25 @@ def getPolarData():
 
 def cacca():
     global polarAccessLink
-    creds = getCredentials(tokenFile='token.json', SCOPES=['https://www.googleapis.com/auth/spreadsheets'])
-    fileName = 'credentials/spreadSheetId.json'
-    keyName = 'SPREADSHEET_ID'
+    creds = get_credentials(token_file='token.json', scopes=['https://www.googleapis.com/auth/spreadsheets'])
+    file_name = 'credentials/spreadSheetId.json'
+    key_name = 'SPREADSHEET_ID'
     value_input_option = 'USER_ENTERED'
     try:
-        lastRow = getLastRow(service=build('sheets', 'v4', credentials=creds), fileName=fileName, keyName=keyName)
+        lastRow = get_last_row(service=build('sheets', 'v4', credentials=creds), file_name=file_name, key_name=key_name)
 
         numberOfDays = 10
-        date = getLastDate(service=build('sheets', 'v4', credentials=creds), fileName=fileName, keyName=keyName)
-        arrayOfDates = getArrayOfDates(lastDate=date, numberOfDays=numberOfDays)
+        date = get_last_date(service=build('sheets', 'v4', credentials=creds), fileName=file_name, keyName=key_name)
+        arrayOfDates = get_array_of_dates(lastDate=date, numberOfDays=numberOfDays)
         yesNoTrainingValues = ['Test'] * numberOfDays
-        trainingFeelingValues = ['Test'] * numberOfDays
+        training_feeling_values = ['Test'] * numberOfDays
         generalFeelingValues = ['Test'] * numberOfDays
         weightValues = ['Test'] * numberOfDays
         noteValues = ['Test'] * numberOfDays
 
         # doShitWithPolarAndStrava()
         # addGui()
-        polarData = getPolarData()
+        polarData = get_polar_data()
 
         sleepingQualities = ['Test'] * numberOfDays
         sleepingTimes = ['Test'] * numberOfDays
@@ -280,16 +275,16 @@ def cacca():
         measuredKms = ['Test'] * numberOfDays
         shoes = ['Test'] * numberOfDays
 
-        df = getDataFrameFromValues(dates=arrayOfDates, yesNoTrainingValues=yesNoTrainingValues,
-                                    trainingFeelingValues=trainingFeelingValues,
-                                    generalFeelingValues=generalFeelingValues, weightValues=weightValues,
-                                    noteValues=noteValues)
+        df = get_data_frame_from_values(dates=arrayOfDates, yes_no_training_values=yesNoTrainingValues,
+                                        training_feeling_values=training_feeling_values,
+                                        general_feeling_values=generalFeelingValues, weight_values=weightValues,
+                                        note_values=noteValues)
         body = {
             'values': df.values.tolist()
         }
         rangeToWrite = ('A' + str(lastRow + 1) + ':F' + str(lastRow + numberOfDays))
-        write_values_in_range(service=build('sheets', 'v4', credentials=creds), fileName=fileName, keyName=keyName,
-                              range=rangeToWrite, value_input_option=value_input_option, body=body)
+        write_values_in_range(service=build('sheets', 'v4', credentials=creds), file_name=file_name, key_name=key_name,
+                              rangee=rangeToWrite, value_input_option=value_input_option, body=body)
     except HttpError as err:
         print(err)
 
