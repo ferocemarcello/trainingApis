@@ -5,7 +5,7 @@ import isodate as isodate
 import requests
 from flask import Flask, request, redirect
 
-import garmin
+import garmin_utils
 
 CALLBACK_ENDPOINT = "/oauth2_callback"
 CALLBACK_PORT = 5000
@@ -177,7 +177,7 @@ def get_all_nights(config_dict):
 
 
 if __name__ == "__main__":
-    data_scale = vesync.get_data()
+    garmin_utils_object = garmin_utils().init()
     print("vesync: " + data_scale())
     print("ff")
     CONFIG_FILENAME = "credentials/config_polar.json"

@@ -1,5 +1,4 @@
 from __future__ import print_function
-
 import http.server
 import json
 import os.path
@@ -18,12 +17,12 @@ from googleapiclient.errors import HttpError
 from selenium import webdriver
 import pandas as pd
 
-import garmin
-from garmin import get_data
 import requests
 import webbrowser
 import tkinter as tk
 from accesslink import AccessLink
+
+import garmin_utils
 
 client_id_google = '288512384213-h737qune0i8k8i13p49sb73taa20l810.apps.googleusercontent.com'
 client_secret_google = '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'
@@ -289,3 +288,9 @@ def cacca():
                               rangee=rangeToWrite, value_input_option=value_input_option, body=body)
     except HttpError as err:
         print(err)
+
+if __name__ == "__main__":
+    username = "ferocemarcello@gmail.com"
+    password = "pass"
+    garmin_object = garmin_utils.GarminUtils(username=username,password=password)
+    garmin_object.get_data()

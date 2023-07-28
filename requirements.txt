@@ -1,8 +1,9 @@
 beautifulsoup4==4.12.2
+cloudscraper==1.2.71
 Flask==2.3.2
-garminconnect==0.1.38
 google_api_python_client==2.95.0
 google_auth_oauthlib==1.0.0
+idbutils==1.0.7
 isodate==0.6.1
 pandas==1.5.3
 polar_accesslink==0.0.5
