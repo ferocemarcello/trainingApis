@@ -5,7 +5,7 @@ import isodate as isodate
 import requests
 from flask import Flask, request, redirect
 
-import vesync
+import garmin
 
 CALLBACK_ENDPOINT = "/oauth2_callback"
 CALLBACK_PORT = 5000

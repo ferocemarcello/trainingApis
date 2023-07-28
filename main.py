@@ -18,8 +18,8 @@ from googleapiclient.errors import HttpError
 from selenium import webdriver
 import pandas as pd
 
-import vesync
-from vesync import get_data
+import garmin
+from garmin import get_data
 import requests
 import webbrowser
 import tkinter as tk
