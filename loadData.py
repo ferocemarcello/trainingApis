@@ -176,19 +176,15 @@ def get_all_nights(config_dict):
     return response.json()['nights']
 
 
-if __name__ == "__main__":
-    garmin_utils_object = garmin_utils().init()
-    print("vesync: " + data_scale())
-    print("ff")
-    CONFIG_FILENAME = "credentials/config_polar.json"
+CONFIG_FILENAME = "credentials/config_polar.json"
+config = get_polar_credentials(filename=CONFIG_FILENAME)
+while "access_token" not in config:
+    print("Authorization is required. Run authorization.py first.")
+    authorization_session(port=CALLBACK_PORT)
     config = get_polar_credentials(filename=CONFIG_FILENAME)
-    while "access_token" not in config:
-        print("Authorization is required. Run authorization.py first.")
-        authorization_session(port=CALLBACK_PORT)
-        config = get_polar_credentials(filename=CONFIG_FILENAME)
-    user_info = get_user_info(config_dict=config)
-    print(user_info)
-    user_nights = get_all_nights(config_dict=config)
-    user_activities = get_all_activities_or_training(config_dict=config, data_name='activity-transactions')
-    user_trainings = get_all_activities_or_training(config_dict=config, data_name='exercise-transactions')
-    print(user_activities)
+user_info = get_user_info(config_dict=config)
+print(user_info)
+user_nights = get_all_nights(config_dict=config)
+user_activities = get_all_activities_or_training(config_dict=config, data_name='activity-transactions')
+user_trainings = get_all_activities_or_training(config_dict=config, data_name='exercise-transactions')
+print(user_activities)

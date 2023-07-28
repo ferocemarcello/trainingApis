@@ -66,8 +66,8 @@ class GarminUtils:
         response = sso_rest_client.get(garmin_connect_sso_login, get_headers, params)
         found = re.search(r"name=\"_csrf\" value=\"(\w*)", response.text, re.M)
         data = {
-            'username': username,
-            'password': password,
+            'username': self.username,
+            'password': self.password,
             'embed': 'false',
             '_csrf': found.group(1)
         }
@@ -81,11 +81,10 @@ class GarminUtils:
             'ticket': found.group(1)
         }
         response = modern_rest_client.get('', params=params)
-        user_prefs = self.__get_json(response.text, 'VIEWER_USERPREFERENCES')
-        modern_rest_client.save_json_to_file('./profile.json', self.user_prefs)
+        self.user_prefs = self.__get_json(response.text, 'VIEWER_USERPREFERENCES')
         self.display_name = self.user_prefs['displayName']
-        social_profile = self.__get_json(response.text, 'VIEWER_SOCIAL_PROFILE')
-        full_name = self.social_profile['fullName']
+        self.social_profile = self.__get_json(response.text, 'VIEWER_SOCIAL_PROFILE')
+        self.full_name = self.social_profile['fullName']
         return True
 
     def __get_json(self, page_html, key):
@@ -99,6 +98,10 @@ class GarminUtils:
         print(login_result)
         return login_result
 
-    def __init__(self, name, password):
-        self.name = name
+    def __init__(self, username, password):
+        self.username = username
         self.password = password
+        self.user_prefs = None
+        self.display_name = None
+        self.social_profile = None
+        self.full_name = None
