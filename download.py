@@ -5,9 +5,7 @@ __copyright__ = "Copyright Tom Goetz"
 __license__ = "GPL"
 
 import os
-import sys
 import re
-import logging
 import datetime
 import time
 import tempfile
@@ -208,9 +206,8 @@ class Download:
         response = self.modern_rest_client.get(self.garmin_connect_activity_search_url, params=params)
         return response.json()
 
-    def __save_activity_details(self, directory, activity_id_str, overwrite):
-        json_filename = f'{directory}/activity_details_{activity_id_str}'
-        self.activity_service_rest_client.download_json_file(activity_id_str, json_filename, overwrite)
+    def __save_activity_details(self, activity_id_str):
+        self.activity_service_rest_client.download_json_file(leaf_route = activity_id_str)
 
     def __save_activity_file(self, activity_id_str):
         zip_filename = f'{self.temp_dir}/activity_{activity_id_str}.zip'
@@ -218,22 +215,15 @@ class Download:
         self.download_service_rest_client.download_binary_file(url, zip_filename)
 
     def get_activities(self, count):
-        """Download activities files from Garmin Connect and save the raw files."""
-        self.temp_dir = tempfile.mkdtemp()
+        """Download activities files from Garmin Connect."""
         activities = self.__get_activity_summaries(0, count)
         for activity in tqdm(activities or [], unit='activities'):
             activity_id_str = str(activity['activityId'])
             activity_name_str = conversions.printable(activity['activityName'])
-            json_filename = f'{directory}/activity_{activity_id_str}.json'
-            if not os.path.isfile(json_filename) or overwrite:
-                self.__save_activity_details(directory, activity_id_str, overwrite)
-                self.modern_rest_client.save_json_to_file(json_filename, activity)
-                if not os.path.isfile(f'{directory}/{activity_id_str}.fit') or overwrite:
-                    self.__save_activity_file(activity_id_str)
-                # pause for a second between every page access
-                time.sleep(1)
-        self.__unzip_files(directory)
-
+            self.__save_activity_details(activity_id_str=activity_id_str)
+            # pause for a second between every page access
+            time.sleep(1)
+        return activities
     def get_activity_types(self):
         return self.activity_service_rest_client.download_json_file(leaf_route='activityTypes')
 

@@ -101,10 +101,16 @@ class RestClientPers():
             return f'{self.protocol.name}://{self.host}/{path}'
         return f'{self.protocol.name}://{self.host}:{self.port}/{path}'
 
-    def get(self, leaf_route, aditional_headers={}, params={}, ignore_errors=[]):
+    def get(self, leaf_route, additional_headers=None, params=None, ignore_errors=None):
         """Make a REST API call using the GET method."""
+        if ignore_errors is None:
+            ignore_errors = []
+        if params is None:
+            params = {}
+        if additional_headers is None:
+            additional_headers = {}
         total_headers = self.headers.copy()
-        total_headers.update(aditional_headers)
+        total_headers.update(additional_headers)
         url = self.url(leaf_route)
         try:
             response = self.session.get(url, headers=total_headers, params=params)
@@ -146,7 +152,7 @@ class RestClientPers():
         """Download data from a REST API and save it to a file."""
         if ignore_errors is None:
             ignore_errors = []
-        return self.get(leaf_route, params=params, ignore_errors=ignore_errors)
+        return self.get(leaf_route, params=params, ignore_errors=ignore_errors).json()
 
     def ___save_json_to_file(self, filename, response):
         try:
@@ -155,7 +161,7 @@ class RestClientPers():
             raise RestResponseExceptionPers(e, response, error=f'failed to save as json: {e} ({response.content})')
 
     def download_json_file(self, leaf_route, params=None, ignore_errors=None):
-        """Download JSON formatted data from a REST API and save it to a file."""
+        """Download JSON formatted data from a REST API."""
         if ignore_errors is None:
             ignore_errors = []
         return self.__download_file(leaf_route, params, ignore_errors)

@@ -125,7 +125,7 @@ class GarminUtils:
             activity_count = self.gc_config.all_activity_count()
         activities_dir = ConfigManager.get_or_create_activities_dir()'''
         activity_types = download.get_activity_types()
-        activities = download.get_activities(count=100)
+        activities = download.get_activities(count=10)
 
         date, days = self.__get_date_and_days(MonitoringDb(self.db_params_dict), latest, MonitoringHeartRate,
                                               MonitoringHeartRate.heart_rate, 'monitoring')

@@ -106,7 +106,8 @@ def write_values_in_range(service, file_name, key_name, rangee, value_input_opti
     print('{0} cells updated.'.format(result.get('updatedCells')))
 
 
-def get_data_frame_from_values(dates, yes_no_training_values, training_feeling_values, general_feeling_values, weight_values,
+def get_data_frame_from_values(dates, yes_no_training_values, training_feeling_values, general_feeling_values,
+                               weight_values,
                                note_values):
     df = pd.DataFrame()
     dateDataFrame = pd.DataFrame({
@@ -147,7 +148,8 @@ def get_polar_access_token(oauth_code):
 
 
 def do_shit_with_polar_and_strava():
-    oauth_code_polar = get_polar_oauth_code(self_client_id_polar=client_id_polar, client_secret_polar=client_secret_polar)
+    oauth_code_polar = get_polar_oauth_code(self_client_id_polar=client_id_polar,
+                                            client_secret_polar=client_secret_polar)
     oauth_code_polar = '97e6e13bcc23f5160509d2af10769ae6'
     polar_access_token = get_polar_access_token(oauth_code=oauth_code_polar)
 
@@ -199,8 +201,8 @@ def get_polar_data():
     # print(response)
 
     polar_accesslink = AccessLink(client_id=client_id_polar,
-                                 client_secret=client_secret_polar,
-                                 redirect_url='http://localhost/')
+                                  client_secret=client_secret_polar,
+                                  redirect_url='http://localhost/')
 
     # Navigate the user to the following URL, so they can complete the authorization form.
     # Code for this will vary by application.
@@ -235,9 +237,9 @@ def get_polar_data():
         if err.response.status_code != 409:
             raise err
         user_info = polar_accesslink.users.get_information(user_id=user_id,
-                                                          access_token=access_token)
+                                                           access_token=access_token)
         daily_activity_transaction = polar_accesslink.daily_activity.create_transaction(user_id=user_id,
-                                                                                       access_token=access_token)
+                                                                                        access_token=access_token)
         daily_activity_response = requests.get(url=daily_activity_transaction.transaction_url,
                                                headers={'Accept': 'application/json',
                                                         'Authorization': 'Bearer ' + access_token})
@@ -289,8 +291,9 @@ def cacca():
     except HttpError as err:
         print(err)
 
+
 if __name__ == "__main__":
     username = "ferocemarcello@gmail.com"
     password = ""
-    garmin_object = garmin_utils.GarminUtils(username=username,password=password)
+    garmin_object = garmin_utils.GarminUtils(username=username, password=password)
     garmin_object.get_data()
