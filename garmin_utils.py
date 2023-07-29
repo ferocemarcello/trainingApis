@@ -8,7 +8,8 @@ from config_manager import ConfigManager
 from download import Download
 from garmin_connect_config_manager import GarminConnectConfigManager
 from statistics import Statistics
-from garmindb.garmindb import GarminDb, Attributes, Sleep, Weight, RestingHeartRate, MonitoringDb, MonitoringHeartRate, ActivitiesDb, GarminSummaryDb
+from garmindb.garmindb import GarminDb, Attributes, Sleep, Weight, RestingHeartRate, MonitoringDb, MonitoringHeartRate, \
+    ActivitiesDb, GarminSummaryDb
 
 garmin_connect_base_url = "https://connect.garmin.com"
 garmin_connect_enus_url = garmin_connect_base_url + "/en-US"
@@ -113,51 +114,51 @@ class GarminUtils:
             days = min((datetime.date.today() - date).days, days)
         return date, days
 
-    def download_data(self, overwrite, latest, stats):
+    def download_data(self, overwrite, latest):
         """Download selected activity types from Garmin Connect"""
 
         download = Download()
 
-        if Statistics.activities in stats:
-            if latest:
-                activity_count = self.gc_config.latest_activity_count()
-            else:
-                activity_count = self.gc_config.all_activity_count()
-            activities_dir = ConfigManager.get_or_create_activities_dir()
-            download.get_activity_types(activities_dir, overwrite)
-            download.get_activities(activities_dir, activity_count, overwrite)
+        '''if latest:
+            activity_count = self.gc_config.latest_activity_count()
+        else:
+            activity_count = self.gc_config.all_activity_count()
+        activities_dir = ConfigManager.get_or_create_activities_dir()'''
+        activity_types = download.get_activity_types()
+        activities = download.get_activities(count=100)
 
-        if Statistics.monitoring in stats:
-            date, days = self.__get_date_and_days(MonitoringDb(self.db_params_dict), latest, MonitoringHeartRate,
-                                             MonitoringHeartRate.heart_rate, 'monitoring')
-            if days > 0:
-                download.get_daily_summaries(ConfigManager.get_or_create_monitoring_dir, date, days, overwrite)
-                download.get_hydration(ConfigManager.get_or_create_monitoring_dir, date, days, overwrite)
-                download.get_monitoring(ConfigManager.get_or_create_monitoring_dir, date, days)
+        date, days = self.__get_date_and_days(MonitoringDb(self.db_params_dict), latest, MonitoringHeartRate,
+                                              MonitoringHeartRate.heart_rate, 'monitoring')
+        if days > 0:
+            download.get_daily_summaries(ConfigManager.get_or_create_monitoring_dir, date, days, overwrite)
+            download.get_hydration(ConfigManager.get_or_create_monitoring_dir, date, days, overwrite)
+            download.get_monitoring(ConfigManager.get_or_create_monitoring_dir, date, days)
 
-        if Statistics.sleep in stats:
-            date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, Sleep, Sleep.total_sleep, 'sleep')
-            if days > 0:
-                sleep_dir = ConfigManager.get_or_create_sleep_dir()
-                download.get_sleep(sleep_dir, date, days, overwrite)
+        date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, Sleep, Sleep.total_sleep,
+                                              'sleep')
+        if days > 0:
+            sleep_dir = ConfigManager.get_or_create_sleep_dir()
+            download.get_sleep(sleep_dir, date, days, overwrite)
 
-        if Statistics.weight in stats:
-            date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, Weight, Weight.weight, 'weight')
-            if days > 0:
-                weight_dir = ConfigManager.get_or_create_weight_dir()
-                download.get_weight(weight_dir, date, days, overwrite)
+        date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, Weight, Weight.weight,
+                                              'weight')
+        if days > 0:
+            weight_dir = ConfigManager.get_or_create_weight_dir()
+            download.get_weight(weight_dir, date, days, overwrite)
 
-        if Statistics.rhr in stats:
-            date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, RestingHeartRate,
-                                             RestingHeartRate.resting_heart_rate, 'rhr')
-            if days > 0:
-                rhr_dir = ConfigManager.get_or_create_rhr_dir()
-                download.get_rhr(rhr_dir, date, days, overwrite)
+        date, days = self.__get_date_and_days(GarminDb(self.db_params_dict), latest, RestingHeartRate,
+                                              RestingHeartRate.resting_heart_rate, 'rhr')
+        if days > 0:
+            rhr_dir = ConfigManager.get_or_create_rhr_dir()
+            download.get_rhr(rhr_dir, date, days, overwrite)
+
+        return activity_count
 
     def get_data(self):
         login_result = self.login()
-        print("Login status: " + login_result)
-        return login_result
+        print("Login status: " + str(login_result))
+        downloaded_data = self.download_data(overwrite=False, latest=False)
+        return downloaded_data
 
     def __init__(self, username, password):
         self.username = username
@@ -167,4 +168,3 @@ class GarminUtils:
         self.social_profile = None
         self.full_name = None
         self.gc_config = GarminConnectConfigManager()
-        self.db_params_dict = ConfigManager.get_db_params()

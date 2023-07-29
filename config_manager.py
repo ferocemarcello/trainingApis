@@ -11,8 +11,7 @@ import tempfile
 from idbutils import DbParams
 from fitfile import Sport
 
-from .config import Config
-
+from config import Config
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +25,7 @@ class ConfigManager(Config):
 
     @classmethod
     def get_db_type(cls):
-        """Return the type (SQLite, MySQL, etc) of database that is configured."""
+        """Return the type (SQLite, MySQL, etc.) of database that is configured."""
         return cls.db['type']
 
     @classmethod
@@ -45,15 +44,15 @@ class ConfigManager(Config):
         return cls.db['host']
 
     @classmethod
-    def _create_dir_if_needed(cls, dir):
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-        return dir
+    def _create_dir_if_needed(cls, directory):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        return directory
 
     @classmethod
     def get_backup_dir(cls):
         """Return the configured directory of where the backuped databses will be stored."""
-        return cls.get_base_dir()  + os.sep + cls.directories['backup_dir']
+        return cls.get_base_dir() + os.sep + cls.directories['backup_dir']
 
     @classmethod
     def get_or_create_backup_dir(cls):
@@ -81,7 +80,7 @@ class ConfigManager(Config):
 
     @classmethod
     def get_config_file(cls):
-        """Return the path to the configuation file."""
+        """Return the path to the configuration file."""
         return cls.get_or_create_config_dir() + os.sep + cls.get_config_filename()
 
     @classmethod
@@ -209,7 +208,7 @@ class ConfigManager(Config):
         """Return the database configuration."""
         db_type = cls.get_db_type()
         db_params = {
-            'db_type' : db_type
+            'db_type': db_type
         }
         if db_type == 'sqlite':
             db_params['db_path'] = cls.get_db_dir(test_db)
@@ -257,7 +256,7 @@ class ConfigManager(Config):
 
     @classmethod
     def graphs_activity_config(cls, activity, key):
-        """Return a config value for the graphing capability given it's key name."""
+        """Return a config value for the graphing capability given its key name."""
         activity = cls.graphs.get(activity)
         if activity is not None:
             return activity.get(key)

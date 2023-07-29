@@ -13,8 +13,8 @@ import datetime
 from idbutils import JsonConfig
 from fitfile import Sport
 
-from .statistics import Statistics
-from .config_manager import ConfigManager
+from statistics import Statistics
+from config_manager import ConfigManager
 
 
 class ConfigException(Exception):
@@ -31,11 +31,7 @@ class GarminConnectConfigManager(JsonConfig):
         try:
             super().__init__(config_file)
         except Exception as e:
-            print(str(e))
-            print(f"Missing or bad config: copy GarminConnectConfig.json.example from {os.path.dirname(os.path.abspath(__file__))} to {config_file} and edit it to "
-                  "add your Garmin Connect username and password.")
-            sys.exit(-1)
-
+            print(e)
     def __get_node_value(self, node, leaf):
         node = self.config.get(node)
         if node is not None:

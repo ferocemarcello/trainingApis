@@ -17,10 +17,11 @@ import cloudscraper
 from tqdm import tqdm
 
 import fitfile.conversions as conversions
-from idbutils import RestClient, RestException, RestResponseException
 
 from garmin_connect_config_manager import GarminConnectConfigManager
 from config_manager import ConfigManager
+from rest_client_pers import RestClientPers
+
 
 class Download:
     """Class for downloading health data from Garmin Connect."""
@@ -55,12 +56,12 @@ class Download:
     def __init__(self):
         """Create a new Download class instance."""
         self.session = cloudscraper.CloudScraper()
-        self.sso_rest_client = RestClient(self.session, 'sso.garmin.com', 'sso', aditional_headers=self.garmin_headers)
-        self.modern_rest_client = RestClient(self.session, 'connect.garmin.com', 'modern',
+        self.sso_rest_client = RestClientPers(self.session, 'sso.garmin.com', 'sso', aditional_headers=self.garmin_headers)
+        self.modern_rest_client = RestClientPers(self.session, 'connect.garmin.com', 'modern',
                                              aditional_headers=self.garmin_headers)
-        self.activity_service_rest_client = RestClient.inherit(self.modern_rest_client,
+        self.activity_service_rest_client = RestClientPers.inherit(self.modern_rest_client,
                                                                "proxy/activity-service/activity")
-        self.download_service_rest_client = RestClient.inherit(self.modern_rest_client, "proxy/download-service/files")
+        self.download_service_rest_client = RestClientPers.inherit(self.modern_rest_client, "proxy/download-service/files")
         self.gc_config = GarminConnectConfigManager()
         self.download_days_overlap = 3  # Existing downloaded data will be re-downloaded and overwritten if it is within this number of days of now.
 
@@ -216,7 +217,7 @@ class Download:
         url = f'activity/{activity_id_str}'
         self.download_service_rest_client.download_binary_file(url, zip_filename)
 
-    def get_activities(self, directory, count, overwrite=False):
+    def get_activities(self, count):
         """Download activities files from Garmin Connect and save the raw files."""
         self.temp_dir = tempfile.mkdtemp()
         activities = self.__get_activity_summaries(0, count)
@@ -233,10 +234,8 @@ class Download:
                 time.sleep(1)
         self.__unzip_files(directory)
 
-    def get_activity_types(self, directory, overwrite):
-        """Download the activity types from Garmin Connect and save to a JSON file."""
-        json_filename = f'{directory}/activity_types'
-        self.activity_service_rest_client.download_json_file('activityTypes', json_filename, overwrite)
+    def get_activity_types(self):
+        return self.activity_service_rest_client.download_json_file(leaf_route='activityTypes')
 
     def __get_sleep_day(self, directory, date, overwrite=False):
         json_filename = f'{directory}/sleep_{date}'

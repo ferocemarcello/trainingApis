@@ -291,6 +291,6 @@ def cacca():
 
 if __name__ == "__main__":
     username = "ferocemarcello@gmail.com"
-    password = "password"
+    password = ""
     garmin_object = garmin_utils.GarminUtils(username=username,password=password)
     garmin_object.get_data()
