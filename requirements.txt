@@ -22,7 +22,7 @@ exceptiongroup==1.1.2
 executing==1.2.0
 fitfile==1.1.3
 Flask==2.3.2
-fonttools==4.41.1
+fonttools==4.43.0
 garminconnect==0.1.38
 garmindb==3.3.0
 google-api-core==2.11.1
