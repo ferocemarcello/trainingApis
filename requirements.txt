@@ -95,7 +95,7 @@ SQLAlchemy==2.0.19
 stack-data==0.6.2
 tcxfile==1.0.4
 tornado==6.3.3
-tqdm==4.64.1
+tqdm==4.66.3
 traitlets==5.9.0
 traittypes==0.2.1
 trio==0.22.2
