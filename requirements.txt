@@ -7,7 +7,7 @@ Bottleneck @ file:///opt/conda/conda-bld/bottleneck_1657175564434/work
 branca==0.6.0
 cached-property==1.5.2
 cachetools==5.3.1
-certifi==2023.7.22
+certifi==2024.7.4
 charset-normalizer==3.2.0
 click==8.1.6
 cloudscraper==1.2.71
