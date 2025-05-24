@@ -94,7 +94,7 @@ soupsieve==2.4.1
 SQLAlchemy==2.0.19
 stack-data==0.6.2
 tcxfile==1.0.4
-tornado==6.4.2
+tornado==6.5.1
 tqdm==4.66.3
 traitlets==5.9.0
 traittypes==0.2.1
