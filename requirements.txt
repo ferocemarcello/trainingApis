@@ -35,7 +35,7 @@ greenlet==2.0.2
 h11==0.16.0
 httplib2==0.22.0
 idbutils==1.0.7
-idna==3.7
+idna==3.15
 ipykernel==6.21.3
 ipyleaflet==0.17.3
 ipython==8.14.0
