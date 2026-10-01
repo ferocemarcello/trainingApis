@@ -57,7 +57,7 @@ mkl-service==2.4.0
 nest-asyncio==1.5.7
 numexpr @ file:///croot/numexpr_1683221822650/work
 numpy @ file:///croot/numpy_and_numpy_base_1687466208449/work
-oauthlib==3.2.2
+oauthlib==4.0.0
 outcome==1.2.0
 packaging==23.1
 pandas==1.5.3
